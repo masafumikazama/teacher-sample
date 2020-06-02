@@ -7,18 +7,34 @@
     <thead>
       <tr>
         <th><%= User.human_attribute_name :name %></th>
+        <th class="center"><%= User.human_attribute_name :level %></th>
+        <% if current_user.admin? %>
+          <th class="center"></th>
+          <th class="center"></th>
+        <% end %>
         <th></th>
       </tr>
     </thead>
 
     <% @users.each do |user| %>
-      <tr>
-        <td><%= link_to user.name, user %></td>
+    <tr>
         <td>
+          <% if current_user.admin? %>
+            <%= link_to user.name, user %>
+          <% else %>
+            <%= user.name %>
+          <% end %>
+        </td>
+        <td class="center"><%= user.level.present? ? user.level : "未所属" %></td>
+        <% if current_user.admin? %>
+          <td class="center"></td>
+          <td class="center"></td>
+        <% end %>
+        <td class="center">
           <% if current_user.admin? && !current_user?(user) %>
+            <%= link_to "基本情報編集", edit_basic_info_user_path(user), remote: true, class: "btn btn-success" %>
             <%= link_to "削除", user, method: :delete,
-                data: { confirm: "削除してよろしいですか？" },
-                class: "btn btn-danger" %>
+                data: { confirm: "削除してよろしいですか？" }, class: "btn btn-danger" %>
           <% end %>
         </td>
       </tr>
@@ -26,3 +42,6 @@
   </table>
   <%= will_paginate %>
 </div>
+
+<!--モーダルウインドウ表示-->
+<div id="edit-basic-info" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
