@@ -10,6 +10,12 @@ class UsersController < ApplicationController
   end
 
   def show
+    
+     @mon_course_content1 = "１０時からの月曜日の授業です。"
+     @mon_course_content2 = "１５時からの月曜日の授業です。"
+     @mon_course_content3 = "１６時からの月曜日の授業です。"
+     @sub_course_content = "まだ未定です。"
+     
      @worked_sum = @attendances.where.not(started_at: nil).count
   end
 
@@ -57,7 +63,27 @@ class UsersController < ApplicationController
     end
     redirect_to users_url
   end
-
+  
+  def line_chat
+    
+  end
+  
+  def test_results
+    
+  end
+  
+  def search
+    
+  end
+  
+  def q_a
+    
+  end
+  
+  def basic_information
+    
+  end
+  
   private
 
     def user_params
