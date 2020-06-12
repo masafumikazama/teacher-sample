@@ -1,13 +1,16 @@
 <% provide(:title, @user.name) %>
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-    <%= form_with(model: @inquiriy, local: true) do |f| %>
+    <%= form_with(model: @inquiriy, url: inquiries_create_user_path, local: true, method: :post) do |f| %>
      <%= render 'shared/error_messages', object: @user %>
     
       <%= f.label :質問はこちら, class: "label-#{yield(:class_text)}" %>
       <%= f.text_area :content, class: "form-control" %>
     
       <%= f.submit "送信する", class: "btn btn-primary" %>
+   <% end %>
+   <% @inquiry.each do |i| %>
+   <%= i.content %>
    <% end %>
   </div>
 </div>

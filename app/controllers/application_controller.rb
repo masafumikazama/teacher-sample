@@ -1,7 +1,10 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   include SessionsHelper
-
+  before_action :set_current_user
+  def set_current_user
+  @current_user = User.find_by(id: session[:user_id])
+  end
   $days_of_the_week = %w{日 月 火 水 木 金 土}
 
   # ページ出力前に1ヶ月分のデータの存在を確認・セットします。

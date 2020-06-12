@@ -1,9 +1,9 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
-  before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :edit_basic_info, :update_basic_info]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :edit_basic_info, :update_basic_info, :basic_information, :update_basic_information, :test_results]
+  before_action :logged_in_user, only: [:index, :edit, :update, :destroy, :edit_basic_info, :update_basic_info, :basic_information, :update_basic_information]
   before_action :correct_user, only: [:edit, :update]
-  before_action :admin_user, only: [:destroy, :edit_basic_info, :update_basic_info]
-  before_action :set_one_month, only: :show
+  before_action :admin_user, only: [:destroy, :edit_basic_info, :update_basic_info, :basic_information, :update_basic_information]
+  before_action :set_one_month, only: [:show, :basic_information, :test_results]
 
   def index
     @users = User.paginate(page: params[:page])
@@ -11,10 +11,37 @@ class UsersController < ApplicationController
 
   def show
     
-     @mon_course_content1 = "１０時からの月曜日の授業です。"
-     @mon_course_content2 = "１５時からの月曜日の授業です。"
-     @mon_course_content3 = "１６時からの月曜日の授業です。"
      @sub_course_content = "まだ未定です。"
+    
+     @mon_course_content1 = "初級：月曜日：１０時からの授業です。"
+     @mon_course_content2 = "初級：月曜日：１５時からの授業です。"
+     @mon_course_content3 = "初級：月曜日：１６時からの授業です。"
+     
+     @tue_course_content1 = "初級：火曜日：１０時からの授業です。"
+     @tue_course_content2 = "初級：火曜日：１５時からの授業です。"
+     @tue_course_content3 = "初級：火曜日：１６時からの授業です。"
+     
+     @wed_course_content1 = "初級：水曜日：１０時からの授業です。"
+     @wed_course_content2 = "初級：水曜日：１５時からの授業です。"
+     @wed_course_content3 = "初級：水曜日：１６時からの授業です。"
+     
+     @thu_course_content1 = "初級：木曜日：１０時からの授業です。"
+     @thu_course_content2 = "初級：木曜日：１５時からの授業です。"
+     @thu_course_content3 = "初級：木曜日：１６時からの授業です。"
+     
+     @fri_course_content1 = "初級：金曜日：１０時からの授業です。"
+     @fri_course_content2 = "初級：金曜日：１５時からの授業です。"
+     @fri_course_content3 = "初級：金曜日：１６時からの授業です。"
+     
+     @sat_course_content1 = "初級：土曜日：１０時からの授業です。"
+     @sat_course_content2 = "初級：土曜日：１５時からの授業です。"
+     @sat_course_content3 = "初級：土曜日：１６時からの授業です。"
+     
+     @sun_course_content1 = "初級：日曜日：１０時からの授業です。"
+     @sun_course_content2 = "初級：日曜日：１５時からの授業です。"
+     @sun_course_content3 = "初級：日曜日：１６時からの授業です。"
+     
+     
      
      @worked_sum = @attendances.where.not(started_at: nil).count
   end
@@ -53,6 +80,7 @@ class UsersController < ApplicationController
   end
 
   def edit_basic_info
+    
   end
 
   def update_basic_info
@@ -72,8 +100,27 @@ class UsersController < ApplicationController
     
   end
   
+  def question
+    @user = User.find(params[:id])
+    @inquiries = @user.inquiries.paginate(page: params[:page])
+  end
+  
   def search
+   
+  end
+  
+  def search_students
+    if params[:name].present?
+      @users = User.where('name LIKE ?', "%#{params[:name]}%")
+    else
+      @users = User.none
+    end
     
+    if params[:level].present?
+      @levels = User.where('name LIKE ?', "%#{params[:level]}%")
+    else
+      @levels = User.none
+    end
   end
   
   def q_a
@@ -81,7 +128,27 @@ class UsersController < ApplicationController
   end
   
   def basic_information
+    @worked_sum = @attendances.where.not(started_at: nil).count
+    array = []
+    test_ave = @attendances.select(:test_score).where.not(test_score: nil)
+    test_ave.each do |i|
+      array << i.test_score
+    end
+
+    @test_ave = array.sum.fdiv(array.length)
     
+  end
+  
+  def update_basic_information
+  
+  end
+  
+  def inquiriy_create
+    @inquiry = Inquiry.new(inquiry_params)
+    
+    @inquiry.save
+      flash[:success] = '新規作成に成功しました。'
+      redirect_to @user
   end
   
   private
@@ -92,6 +159,10 @@ class UsersController < ApplicationController
     
     def basic_info_params
       params.require(:user).permit(:level)
+    end
+    
+    def inquiry_params
+       params.require(:inquiry).permit(:content)
     end
 
     # beforeフィルター

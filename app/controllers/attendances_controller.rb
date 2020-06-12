@@ -20,4 +20,15 @@ class AttendancesController < ApplicationController
     end
     redirect_to @user
   end
+  
+  def todays_test
+    @user = User.find(params[:user_id])
+    @attendance = Attendance.find(params[:id])
+    if @attendance.test_score.nil?
+       score = rand(1..100)
+       @attendance.update_attributes(test_score: score)
+       flash[:info] = "本日のスコア"
+    end  
+    redirect_to @user
+  end
 end

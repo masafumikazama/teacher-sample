@@ -8,7 +8,7 @@
          <% if current_user.admin? %>
           <li><%= link_to "全ての生徒", users_path %></li>
           <li><%= link_to "生徒からの質問", q_a_path %></li>
-          <li><%= link_to "生徒検索", search_path %></li>
+          <li><%= link_to "生徒検索", search_students_users_path %></li>
          <% end %>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">

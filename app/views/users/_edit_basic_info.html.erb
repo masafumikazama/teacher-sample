@@ -16,10 +16,16 @@
             <%= render 'shared/error_messages', object: @user %>
 
             <%= f.label :name, class: "label-#{yield(:class_text)}" %>
-            <p><%= @user.name %></p>
+  　　　　　　　　<%= f.text_field :name, class: "form-control" %>
+            
+            <%= f.label :email, class: "label-#{yield(:class_text)}" %>
+  　　　　　　　　<%= f.email_field :email, class: "form-control" %>
 
+            <%= f.label :password, class: "label-#{yield(:class_text)}" %>
+  　　　　　　　　<%= f.password_field :password, class: "form-control" %>
+            
             <%= f.label :level, class: "label-#{yield(:class_text)}" %>
-            <%= f.text_field :level, class: "form-control" %>
+  　　　　　　　　　<%= f.select :level, [["初級", "初級"],["中級", "中級"],["上級", "上級"]], {}, {class: "form-control"} %>
             
 
             <div class="center">
