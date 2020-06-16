@@ -27,8 +27,42 @@ class AttendancesController < ApplicationController
     if @attendance.test_score.nil?
        score = rand(1..100)
        @attendance.update_attributes(test_score: score)
-       flash[:info] = "本日のスコア"
+       flash[:info] = "本日のテストを受講しました"
     end  
     redirect_to @user
   end
+  
+  def edit_inquiry
+    @user = User.find(params[:id])
+    @inquiry = @user.attendances.all
+    @users = User.all
+    @attendance = @user.attendances.all
+  end
+  
+  def new
+    @attendance = Attendance.new
+  end
+  
+  def create_inquiry
+    
+    @attendance = Attendance.new(
+      inquiry: params[:inquiry],
+      #今回追加する操作
+      user_id: @current_user.id
+    )
+   if @attendance.save!
+      flash[:success] = '新規作成に成功しました。'
+      redirect_to user_path
+   else
+      flash[:danger] = "だめです。"
+      redirect_to user_path
+   end
+  end
+  
+  private
+  
+    def inquiry_params
+      params.require(:attendance).permit(:inquiry)
+    end
+  
 end

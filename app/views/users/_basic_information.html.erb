@@ -15,6 +15,11 @@
           <table class="table table-bordered">
             <thead>
               <tr>
+                <th colspan = "5"><center><%= "テスト結果グラフ" %></center></th>
+              </tr>
+              
+              <tr>
+                <th colspan = "5"><%= line_chart @score_graph, width: "850px", height: "200px" %></th>
               </tr>
             </thead>
             
@@ -24,7 +29,15 @@
                 <td><%= "メールアドレス：" %><%= @user.email %></td><br>
                 <td><%= "クラス：" %><%= @user.level %></td><br>
                 <td><%= "出席回数：" %><%= @worked_sum %></td><br>
-                <td><%= "テスト結果平均：" %><%= @test_ave %></td><br>
+                <td><%= "テスト結果平均：" %><%= @test_ave.floor(2).to_f %></td><br>
+              </tr>
+              <tr>
+                <td colspan = "5">
+                  <%= "テスト結果：" %><br>
+                  <% @tests.each do |test| %>
+                  <%= "日付：" %><%= test.worked_on.to_s(:date) %><%= "　" %><%= "スコア：" %><%= test.test_score %><br>
+                  <% end %>
+                  </td>
               </tr>
             </tbody>
           </table>

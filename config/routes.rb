@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   
   get '/search', to: 'users#search'
   get '/q_a', to: 'users#q_a'
+  
 
   # ログイン機能
   get    '/login', to: 'sessions#new'
@@ -11,6 +12,8 @@ Rails.application.routes.draw do
   delete '/logout', to: 'sessions#destroy'
   
    patch 'users/:user_id/attendances/:id/todays_test', to: 'attendances#todays_test', as: :todays_test_attendances
+   
+   #get 'users/:id/inquiries/q_a', to: 'inquiries#q_a', as: :q_a_inquiries
 
   resources :users do
       get :search_students, on: :collection
@@ -24,10 +27,19 @@ Rails.application.routes.draw do
       
       get 'line_chat'
       get 'test_results'
-      get 'question'
+      
+      get 'attendances/edit_inquiry'
+      post 'attendances/create_inquiry'
       
       get 'inquiries/question'
       post 'inquiries/create'
+      
+      get 'edit_note'
+      patch 'update_note'
+      
+      
+      
+     # get 'inquiries/q_a'
       
      # patch 'attendances/todays_test'
     end

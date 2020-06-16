@@ -15,21 +15,20 @@
 <div>
   <table class="table table-bordered table-condensed user-table">
     <tr>
-      <td>【<%= l(@first_day, format: :middle) %>】オンラインレスン表</td>
-      <td>指定勤務時間</td>
-      <td>基本時間</td>
-      <td>月初日：<%= l(@first_day, format: :short) %></td>
+      <td>【<%= l(@first_day, format: :middle) %>】オンラインレッスン表</td>
+      <td>名前：<%= @user.name %></td>
+      <td>受講日数</td>
+      
     </tr>
 
     <tr>
       <td>レベル：<%= @user.level.present? ? @user.level : "初級" %></td>
-      <td>名前：<%= @user.name %><br>
+      <td>
                 <%= link_to "Line Chat", line_chat_user_path, class: "btn btn-primary" %>
-                <%= link_to "テスト結果", test_results_user_path, class: "btn btn-primary" %>
                 <%= link_to "質問する", inquiries_question_user_path, class: "btn btn-primary" %>
       </td>
-      <td>出勤日数：<%= @worked_sum %></td>
-      <td>月末日：<%= l(@last_day, format: :short) %></td>
+      <td><%= @worked_sum %><%= "日" %></td>
+      
     </tr>
   </table>
 </div>
@@ -40,13 +39,13 @@
 </div>
 
 <div>
-  <table class="table table-bordered table-condensed table-hover" id="table-attendances">
-    <thead>
+  <table  class="table table-condensed table-hover border" id="table-attendances">
+    <thead class="border">
       <tr>
         <th>日付 / 曜日</th>
         <th>10:00 - 11:00</th>
-        <th>15:30 - 16:30</th>
-        <th>16:30 - 17:30</th>
+        <th>15:00 - 16:00</th>
+        <th>17:00 - 18:00</th>
         <th>本日のテスト</th>
         <th>備考</th>
       </tr>
@@ -55,18 +54,11 @@
     <tbody>
       <% @attendances.each do |day| %>
       　<tr>
-        　<td width="200"><%= l(day.worked_on, format: :short) %> / <%= $days_of_the_week[day.worked_on.wday] %><br>
-        
-            <% if btn_text = attendance_state(day) %>
-              <%= link_to "#{btn_text}", user_attendance_path(@user, day), method: :patch, class: "btn btn-primary btn-attendance" %>
-            <% end %><br>
-            
-            <% if $days_of_the_week[day.worked_on.wday] == "月" %>
-              <%= @sub_course_content %>
-            <% end %> 
+        　<td>
+        　  <%= l(day.worked_on, format: :short) %> / <%= $days_of_the_week[day.worked_on.wday] %><br>
         　</td>
- 
-          <td><%= l(day.started_at, format: :time) if day.started_at.present? %>
+ 　       
+          <td bgcolor="#ffc0cb">
           　<% if $days_of_the_week[day.worked_on.wday] == "月" %>
               <%= @mon_course_content1 %>
             <% elsif $days_of_the_week[day.worked_on.wday] == "火" %>
@@ -81,10 +73,18 @@
               <%= @sat_course_content1 %>
             <% elsif $days_of_the_week[day.worked_on.wday] == "日" %>
               <%= @sun_course_content1 %>  
-            <% end %> 
+            <% end %><br>
+            
+            <% if btn_text = attendance_state(day) %>
+              <% if @time >= 10 && @time <= 11 %>
+              <%= link_to "#{btn_text}", user_attendance_path(@user, day), method: :patch, class: "btn btn-primary btn-attendance" %>
+              <%= @time %>
+              <% end %>
+            <% end %><br>
+            
           </td>
           
-          <td><%= l(day.finished_at, format: :time) if day.finished_at.present? %>
+          <td bgcolor="#98fb98">
           　<% if $days_of_the_week[day.worked_on.wday] == "月" %>
               <%= @mon_course_content2 %>
             <% elsif $days_of_the_week[day.worked_on.wday] == "火" %>
@@ -99,10 +99,17 @@
               <%= @sat_course_content2 %>
             <% elsif $days_of_the_week[day.worked_on.wday] == "日" %>
               <%= @sun_course_content2 %>   
-            <% end %>
+            <% end %><br>
+            
+            <% if btn_text = attendance_state(day) %>
+              <% if @time >= 15 && @time <= 16 %>
+              <%= link_to "#{btn_text}", user_attendance_path(@user, day), method: :patch, class: "btn btn-primary btn-attendance" %>
+              <%= @time %>
+              <% end %>
+            <% end %><br>
           </td>
           
-          <td>
+          <td bgcolor="#e0ffff">
             <% if $days_of_the_week[day.worked_on.wday] == "月" %>
               <%= @mon_course_content3 %>
             <% elsif $days_of_the_week[day.worked_on.wday] == "火" %>
@@ -117,21 +124,29 @@
               <%= @sat_course_content3 %>
             <% elsif $days_of_the_week[day.worked_on.wday] == "日" %>
               <%= @sun_course_content3 %> 
-            <% end %>
+            <% end %><br>
             
-              <% if day.started_at.present? && day.finished_at.present? %>
-                <%= str_times = working_times(day.started_at, day.finished_at) %>
-                <% @total_working_times = @total_working_times.to_f + str_times.to_f %>
+            <% if btn_text = attendance_state(day) %>
+              <% if @time >= 17 && @time <= 18 %>
+              <%= link_to "#{btn_text}", user_attendance_path(@user, day), method: :patch, class: "btn btn-primary btn-attendance" %>
+              <%= @time %>
               <% end %>
+            <% end %>
           </td>
-          <td><% if btn_text = attendance_todays_test(day) %>
+          <td bgcolor="#ffffe0"><% if btn_text = attendance_todays_test(day) %>
               　<%= link_to "本日のテストを受講する", todays_test_attendances_path(@user, day), method: :patch, class: "btn btn-primary btn-attendance" %>
             　<% end %>
             　<% if day.test_score.present? %>
-                <%= day.test_score %>
+                <%= day.test_score %><%= "点" %>
               <% end %>
           </td>
-          <td>本日は祝日の為お休みですなど。</td>
+          <td>
+              <%= link_to "連絡事項", edit_note_user_path(@user, params:{ day: day.worked_on, youbi: %w{日 月 火 水 木 金 土}[day.worked_on.wday] }), remote: true, class: "btn btn-success"  %><br>
+ 
+              <!-- Modal -->
+              <div id="<%= day.id %>" class="modal fade"  tabindex="-1"  role="dialog" aria-hidden="true"></div>
+              <%= day.note %>
+          </td>
         </tr>
       <% end %>
     </tbody>
@@ -139,15 +154,15 @@
     <tfoot>
       <!--rowspan:縦結合、colspan：横結合-->
       <tr>
-        <td colspan="2">累計日数</td>
-        <td colspan="2">総合勤務時間</td>
-        <td colspan="2">累計在社時間</td>
-        <td rowspan="2"></td>
+        <td colspan="3">受講日数</td>
+        <td colspan="3">テスト平均点</td>
+        
+        
       </tr>
       <tr>
-        <td colspan="2"><%= @attendances.count %></td>
-        <td colspan="2"></td>
-        <td colspan="2"><%= format("%.2f", @total_working_times.to_f) %></td>
+        <td colspan="3"><%= @worked_sum %><%= "日" %></td>
+        <td colspan="3"><%= @test_ave.floor(2).to_f %><%= "点" %></td>
+        
       </tr>
     </tfoot>   
   </table>

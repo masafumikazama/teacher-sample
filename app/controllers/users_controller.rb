@@ -10,40 +10,50 @@ class UsersController < ApplicationController
   end
 
   def show
+     time = Time.current
+     
+     @time = time.hour
     
      @sub_course_content = "まだ未定です。"
     
-     @mon_course_content1 = "初級：月曜日：１０時からの授業です。"
-     @mon_course_content2 = "初級：月曜日：１５時からの授業です。"
-     @mon_course_content3 = "初級：月曜日：１６時からの授業です。"
+     @mon_course_content1 = "アルファベット読み書き"
+     @mon_course_content2 = "本読みと作文"
+     @mon_course_content3 = "物語と会話"
      
-     @tue_course_content1 = "初級：火曜日：１０時からの授業です。"
-     @tue_course_content2 = "初級：火曜日：１５時からの授業です。"
-     @tue_course_content3 = "初級：火曜日：１６時からの授業です。"
+     @tue_course_content1 = "レクリエーション"
+     @tue_course_content2 = "物語と会話"
+     @tue_course_content3 = "本読みと作文"
      
-     @wed_course_content1 = "初級：水曜日：１０時からの授業です。"
-     @wed_course_content2 = "初級：水曜日：１５時からの授業です。"
-     @wed_course_content3 = "初級：水曜日：１６時からの授業です。"
+     @wed_course_content1 = "アルファベット読み書き"
+     @wed_course_content2 = "レクリエーション"
+     @wed_course_content3 = "物語と会話"
      
-     @thu_course_content1 = "初級：木曜日：１０時からの授業です。"
-     @thu_course_content2 = "初級：木曜日：１５時からの授業です。"
-     @thu_course_content3 = "初級：木曜日：１６時からの授業です。"
+     @thu_course_content1 = "本読みと作文"
+     @thu_course_content2 = "レクリエーション"
+     @thu_course_content3 = "アルファベット読み書き"
      
-     @fri_course_content1 = "初級：金曜日：１０時からの授業です。"
-     @fri_course_content2 = "初級：金曜日：１５時からの授業です。"
-     @fri_course_content3 = "初級：金曜日：１６時からの授業です。"
+     @fri_course_content1 = "アルファベット読み書き"
+     @fri_course_content2 = "会話中心"
+     @fri_course_content3 = "本読みと作文"
      
-     @sat_course_content1 = "初級：土曜日：１０時からの授業です。"
-     @sat_course_content2 = "初級：土曜日：１５時からの授業です。"
-     @sat_course_content3 = "初級：土曜日：１６時からの授業です。"
+     @sat_course_content1 = "物語と会話"
+     @sat_course_content2 = "会話中心"
+     @sat_course_content3 = "アルファベット読み書き"
      
-     @sun_course_content1 = "初級：日曜日：１０時からの授業です。"
-     @sun_course_content2 = "初級：日曜日：１５時からの授業です。"
-     @sun_course_content3 = "初級：日曜日：１６時からの授業です。"
+     @sun_course_content1 = "アルファベット読み書き"
+     @sun_course_content2 = "レクリエーション"
+     @sun_course_content3 = "本読みと作文"
      
      
      
      @worked_sum = @attendances.where.not(started_at: nil).count
+     
+     array = []
+     test_ave = @attendances.select(:test_score).where.not(test_score: nil)
+     test_ave.each do |i|
+       array << i.test_score
+     end
+      @test_ave = array.sum.fdiv(array.length)
   end
 
   def new
@@ -77,6 +87,37 @@ class UsersController < ApplicationController
     @user.destroy
     flash[:success] = "#{@user.name}のデータを削除しました。"
     redirect_to users_url
+  end
+  
+  def edit_note
+    @day = Date.parse(params[:day])
+    @youbi = params[:youbi]
+    @user = User.find(params[:id])
+    @attendance = @user.attendances.find_by(worked_on: @day)
+    redirect_to(root_url) unless current_user?(@user)
+    @first_day = params[:date].nil? ?
+    Date.current.beginning_of_month : params[:date].to_date
+    @last_day = @first_day.end_of_month
+    (@first_day..@last_day).each do |day|
+      unless @user.attendances.any? {|attendance| attendance.worked_on == day}
+        record = @user.attendances.build(worked_on: day)
+        record.save
+      end
+    end
+    
+    @dates = @user.attendances.where('worked_on >= ? and worked_on <= ?', @first_day, @last_day).order('worked_on')
+  end
+  
+  def update_note
+    @user = User.find(params[:id])
+    @day = Date.parse(params[:day])
+    @attendance = @user.attendances.find_by(worked_on: @day)
+    
+    
+     if @attendance.update_attributes(note_params)
+      flash[:success] = "連絡事項を更新しました。"
+      redirect_to @user
+     end
   end
 
   def edit_basic_info
@@ -117,25 +158,54 @@ class UsersController < ApplicationController
     end
     
     if params[:level].present?
-      @levels = User.where('name LIKE ?', "%#{params[:level]}%")
+      @levels = User.where('level LIKE ?', "%#{params[:level]}%")
     else
       @levels = User.none
     end
   end
   
   def q_a
+    array = []
+    users = User.all
+    users.each do |user|
+      inquiries = user.inquiries.where.not(content: nil)
+      inquiries.each do |data|
+       array.push(data.user.name)
+      end
+    end
+       puts array.uniq
+      @user_name = array.uniq
+    
     
   end
   
+  
   def basic_information
     @worked_sum = @attendances.where.not(started_at: nil).count
+    @tests = @attendances.where.not(test_score: nil)
+    
     array = []
     test_ave = @attendances.select(:test_score).where.not(test_score: nil)
     test_ave.each do |i|
       array << i.test_score
     end
-
     @test_ave = array.sum.fdiv(array.length)
+    
+    
+    score_graph = []
+    users = User.all
+    users.each do |user|
+      attendances = @user.attendances.where.not(test_score: nil)
+    
+      attendances.each do |test_day|
+       childArray = []
+       childArray.push(test_day[:worked_on])
+       childArray.push(test_day[:test_score])
+       score_graph.push(childArray)
+      end
+    end
+     puts score_graph
+    @score_graph = score_graph
     
   end
   
@@ -163,6 +233,10 @@ class UsersController < ApplicationController
     
     def inquiry_params
        params.require(:inquiry).permit(:content)
+    end
+    
+    def note_params
+      params.require(:attendance).permit(:note)
     end
 
     # beforeフィルター

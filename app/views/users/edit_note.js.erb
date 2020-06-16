@@ -1,0 +1,6 @@
+<% @dates.each do |day| %>
+
+ $("#<%= day.id %>").html("<%= escape_javascript(render 'edit_note') %>");
+ $("#<%= day.id %>").modal("show");
+<% break %> 
+<%end%>

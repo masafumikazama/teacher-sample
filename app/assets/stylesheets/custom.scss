@@ -220,3 +220,8 @@ p {
   padding-top: 10%;
 }
 
+.border {
+  border: solid 3px black;
+}
+
+td, th { border: 2px black solid; }

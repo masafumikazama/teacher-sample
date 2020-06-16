@@ -3,14 +3,13 @@
 
 <div class="col-md-10 col-md-offset-1">
   <%= will_paginate %>
-  <table class="table table-condensed table-hover" id="table-users">
-    <thead>
+  <table class="table table-condensed table-hover border" id="table-users">
+    <thead class="border">
       <tr>
         <th><%= User.human_attribute_name :name %></th>
         <th class="center"><%= User.human_attribute_name :level %></th>
         <% if current_user.admin? %>
-          <th class="center"></th>
-          <th class="center"></th>
+          
         <% end %>
         <th></th>
       </tr>
@@ -27,8 +26,7 @@
         </td>
         <td class="center"><%= user.level.present? ? user.level : "未所属" %></td>
         <% if current_user.admin? %>
-          <td class="center"></td>
-          <td class="center"></td>
+          
         <% end %>
         <td class="center">
           <% if current_user.admin? && !current_user?(user) %>
