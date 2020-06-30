@@ -4,23 +4,46 @@
    <h3 align="center"><%= "#{username}からの質問" %></h3>
  <table class="table table-bordered">  
    <thead>
-      <tr>
+      <tr class="show1_back">
           <th>質問内容</th>
       </tr>
     </thead>
     
     <tbody>
      <% user = User.find_by(name: username) %>
-      <% inquiries = user.inquiries.where.not(content: nil) %>
+      <% inquiries = user.inquiries.where.not(content: nil).where(answer: nil) %>
        <% inquiries.each do |inquiry| %>
         <tr>
           <td>
+              <!-- <%= inquiry.id %><br> -->
+              <!-- <%= inquiry.user_id %><br> -->
               <%= inquiry.content %><br>
-              <%= link_to "返信", " /users/:user_id/inquiries/#{inquiry.id}", method: :delete, class: "btn btn-info btn-xs", data: { confirm: "質問を削除してよろしいですか？" } %>
-              <%= link_to "削除", " /users/:user_id/inquiries/#{inquiry.id}", method: :delete, class: "btn btn-danger btn-xs", data: { confirm: "質問を削除してよろしいですか？" } %>
+              <%= inquiry.answer %><br>
+              <!-- <%= link_to "返信", inquiries_edit_answer_user_path(user), remote: true, class: "btn btn-info btn-xs" %> -->
+              <!-- <div id="<%= inquiry.id %>" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div> -->
+              <!-- <%= link_to "削除", " /users/:user_id/inquiries/#{inquiry.id}", method: :delete, class: "btn btn-danger btn-xs", data: { confirm: "質問を削除してよろしいですか？" } %> -->
+              <button type="button" class="btn btn-info btn-xs" data-toggle="collapse" data-target="#demo<%= inquiry.id %>">返信</button>
+                <div id="demo<%= inquiry.id %>" class="collapse">
+                  <div class="row">
+                    <div class="col-md-6 col-md-offset-3">
+                       <%= form_with(model: inquiry, url: update_q_answer_inquiries_path(user.id, inquiry.id), local: true, method: :patch) do |f| %>
+   
+                          <%= f.label :回答, class: "label-#{yield(:class_text)}" %>
+                          <%= f.text_area :answer, class: "form-control" %>
+          
+                         <div class="center">
+                          <%= f.submit "送信する", class: "btn btn-primary" %>
+                         </div>
+                       <% end %>
+                    </div>
+                  </div>
+                </div>
+               <%= link_to "削除", " /users/:user_id/inquiries/#{inquiry.id}", method: :delete, class: "btn btn-danger btn-xs", data: { confirm: "質問を削除してよろしいですか？" } %>
           </td>
         </tr>
        <% end %>
     </tbody> 
  </table>
  <% end %>
+ 
+ 

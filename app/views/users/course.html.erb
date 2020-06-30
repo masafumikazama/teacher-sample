@@ -1,0 +1,30 @@
+
+<h1>追加授業作成</h1>
+
+<div align="center">
+  <%= link_to "追加授業確認", edit_course_users_path, remote: true, class: "btn btn-success" %>
+</div>
+<div id="edit-course" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_with(model: @course, url: "/course", local: true, method: :post) do |f| %>
+    
+      <%= f.label :授業内容, class: "label-#{yield(:class_text)}" %>
+      <%= f.text_area :course_content, class: "form-control" %>
+      
+      <%= f.label :course_level, class: "label-#{yield(:class_text)}" %>
+      <%= f.select :course_level, [["初級", "初級"],["中級", "中級"],["上級", "上級"]], {}, {class: "form-control"} %>
+      
+      <%= f.label :course_day, class: "label-#{yield(:class_text)}" %>
+      <%= f.date_field :course_day, class: "form-control" %>
+  
+      <%= f.label :course_time, class: "label-#{yield(:class_text)}" %>
+      <%= f.select :course_timing, [["10時-11時", "11時"],["15時-16時", "16時"],["17時-18時", "17時"]], {}, {class: "form-control"} %>
+    
+      <%= f.submit "作成する", class: "btn btn-primary" %>
+   <% end %>
+   
+   
+  </div>
+</div>

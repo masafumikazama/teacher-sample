@@ -4,6 +4,9 @@
 /* universal */
 
 body {
+  background:url(https://cdn.pixabay.com/photo/2016/02/24/10/52/alphabet-1219546_960_720.jpg);
+  background-size:cover; 
+  
   padding-top: 60px;
 }
 
@@ -13,6 +16,11 @@ section {
 
 textarea {
   resize: vertical;
+  background-color: white;
+}
+
+td {
+  background-color: white;
 }
 
 .center {
@@ -25,49 +33,43 @@ textarea {
 }
 /* top.html */
  .jumbotron {
-   background:url(https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRLt7-jKP3KJy6pkDPrb0MKHTE19A2e_ZUDMRQ9g6tUAbUWA5-V&usqp=CAU) center no-repeat; background-size: cover;
+   
+   height: 250px;
  }
  
  .titlecolor {
-   color: #6cb4e4;
-  text-align: center;
-  margin-left: 250px;
-  margin-right: 250px;
-  padding: 0.25em;
-  border-top: solid 2px #6cb4e4;
-  border-bottom: solid 2px #6cb4e4;
-  background: -webkit-repeating-linear-gradient(-45deg, #f0f8ff, #f0f8ff 3px,#e9f4ff 3px, #e9f4ff 7px);
-  background: repeating-linear-gradient(-45deg, #f0f8ff, #f0f8ff 3px,#e9f4ff 3px, #e9f4ff 7px);
+   color: #364e96;/*文字色*/
+  border: solid 3px #364e96;/*線色*/
+  padding: 0.5em;/*文字周りの余白*/
+  border-radius: 0.5em;/*角丸*/
+  margin-left: 200px;
+  margin-right: 200px;
  }
  
  .subtitlecolor {
    position: relative;
-  color: #333;
-  display: inline-block;
-  margin: 47px 180px;
-  text-shadow: 0 0 2px white;
+  padding: 0.5em;
+  background: #C70039;
+  color: white;
+  margin-bottom: 20px;
  }
  
  .subtitlecolor:before {
-  content: "";
   position: absolute;
-  background: #ffd69d;
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  top: 50%;
-  left: 50%;
-  -webkit-transform: translate(-50%,-50%);
-  transform: translate(-50%,-50%);
-  z-index: -1;
+  content: '';
+  top: 100%;
+  left: 0;
+  border: none;
+  border-bottom: solid 15px transparent;
+  border-right: solid 20px rgb(149, 158, 155);
 }
 
 .subtitlesize {
-  margin-left: 210px;
+  text-align: center;
 }
 
 .subtitlesize2 {
-  margin-left: 190px;
+  text-align: center;
 }
 
 
@@ -225,3 +227,31 @@ p {
 }
 
 td, th { border: 2px black solid; }
+
+/* 背景 */
+
+.back_image {
+  
+  
+  
+}
+
+.show_back {
+  background-color: #ffc0cb;
+}
+
+.show1_back {
+  background-color: #98fb98;
+}
+
+.show2_back {
+  background-color: #e0ffff;
+}
+
+.show3_back {
+  background-color: #ffffe0;
+}
+
+.show5_back {
+  background-color: white;
+}

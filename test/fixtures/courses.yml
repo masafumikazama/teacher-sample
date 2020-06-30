@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  course_day: 2020-06-28
+  course_content: MyString
+  course_time: 2020-06-28 20:59:08
+  course_level: MyString
+
+two:
+  course_day: 2020-06-28
+  course_content: MyString
+  course_time: 2020-06-28 20:59:08
+  course_level: MyString

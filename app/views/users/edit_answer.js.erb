@@ -1,0 +1,7 @@
+<% @inquiries.each do |inquiry| %>
+
+$("#<%= inquiry.id %>").html("<%= escape_javascript(render 'edit_answer') %>");
+$("#<%= inquiry.id %>").modal("show");
+
+<% break %> 
+<%end%>

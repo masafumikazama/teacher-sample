@@ -10,5 +10,10 @@
       <%= f.submit "送信する", class: "btn btn-primary" %>
    <% end %>
    
+   <div align="center">
+     <%= link_to "先生からの回答", edit_question_user_path, remote: true, class: "btn btn-success" %>
+   </div>
+   <div id="edit-question" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+   
   </div>
 </div>

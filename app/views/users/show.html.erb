@@ -1,9 +1,10 @@
 <% provide(:title, @user.name) %>
 
 <% if current_user.admin? %>
-　<div class="center jumbotron">
-  </div>
-  <h1>管理者専用</h1>
+　
+　  <h1>管理者専用</h1>
+  
+  
 <% else %>
 
 <% if current_user.level == "上級" %>
@@ -57,8 +58,15 @@
         　<td>
         　  <%= l(day.worked_on, format: :short) %> / <%= $days_of_the_week[day.worked_on.wday] %><br>
         　</td>
- 　       
-          <td bgcolor="#ffc0cb">
+         
+          <td class="show_back">
+            
+            <% @courses.each do |course| %>
+             <% if course.course_day == day.worked_on && course.course_level == "初級" && course.course_timing == "11時" %>
+              <%= course.course_content %>
+             <% end %>
+            <% end %><br>
+           
           　<% if $days_of_the_week[day.worked_on.wday] == "月" %>
               <%= @mon_course_content1 %>
             <% elsif $days_of_the_week[day.worked_on.wday] == "火" %>
@@ -72,7 +80,7 @@
             <% elsif $days_of_the_week[day.worked_on.wday] == "土" %>
               <%= @sat_course_content1 %>
             <% elsif $days_of_the_week[day.worked_on.wday] == "日" %>
-              <%= @sun_course_content1 %>  
+              <%= @sun_course_content1 %>
             <% end %><br>
             
             <% if btn_text = attendance_state(day) %>
@@ -84,7 +92,14 @@
             
           </td>
           
-          <td bgcolor="#98fb98">
+          <td class="show1_back">
+            
+            <% @courses.each do |course| %>
+             <% if course.course_day == day.worked_on && course.course_level == "初級" && course.course_timing == "16時" %>
+              <%= course.course_content %>
+             <% end %>
+            <% end %><br>
+            
           　<% if $days_of_the_week[day.worked_on.wday] == "月" %>
               <%= @mon_course_content2 %>
             <% elsif $days_of_the_week[day.worked_on.wday] == "火" %>
@@ -109,7 +124,14 @@
             <% end %><br>
           </td>
           
-          <td bgcolor="#e0ffff">
+          <td class="show2_back">
+            
+            <% @courses.each do |course| %>
+             <% if course.course_day == day.worked_on && course.course_level == "初級" && course.course_timing == "17時" %>
+              <%= course.course_content %>
+             <% end %>
+            <% end %><br>
+            
             <% if $days_of_the_week[day.worked_on.wday] == "月" %>
               <%= @mon_course_content3 %>
             <% elsif $days_of_the_week[day.worked_on.wday] == "火" %>
@@ -133,11 +155,22 @@
               <% end %>
             <% end %>
           </td>
-          <td bgcolor="#ffffe0"><% if btn_text = attendance_todays_test(day) %>
+          <td class="show3_back"><% if btn_text = attendance_todays_test(day) %>
               　<%= link_to "本日のテストを受講する", todays_test_attendances_path(@user, day), method: :patch, class: "btn btn-primary btn-attendance" %>
             　<% end %>
             　<% if day.test_score.present? %>
-                <%= day.test_score %><%= "点" %>
+                <%= day.test_score %><%= "点" %><br>
+               <% if day.test_score <= 20 %>  
+                <%= @hows_test1 %>
+               <% elsif day.test_score <= 40 %>
+                <%= @hows_test2 %>
+               <% elsif day.test_score <= 60 %>
+                <%= @hows_test3 %>
+               <% elsif day.test_score <= 80 %>
+                <%= @hows_test4 %>
+               <% elsif day.test_score <= 100 %>
+                <%= @hows_test5 %>
+               <% end %>  
               <% end %>
           </td>
           <td>

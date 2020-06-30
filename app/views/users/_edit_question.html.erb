@@ -1,0 +1,37 @@
+<div class="modal-dialog modal-lg modal-dialog-center">
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+      <h1 class="modal-title">先生からの回答</h1>
+    </div>
+    <div class="modal-body">
+      <div class="row">
+            
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+           <th>質問</th>
+           <th>回答</th>
+           <th></th>
+         </tr>
+         </thead>
+         
+         
+       <tbody>
+         <% @answers.each do |inquiry| %>
+          <tr>
+           <td><%= inquiry.content %></td>
+           <td><%= inquiry.answer %></td>
+           <td><%= link_to "削除", " /edit_question/#{inquiry.id}", method: :delete, class: "btn btn-danger", data: { confirm: "回答を削除してよろしいですか？" } %></td>
+         </tr>
+         <% end %>
+       </tbody>
+      </table>
+        
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,1 +1,182 @@
-<h1>上級</h1>
+
+<div>
+  <table class="table table-bordered table-condensed user-table">
+    <tr>
+      <td>【<%= l(@first_day, format: :middle) %>】オンラインレッスン表</td>
+      <td>名前：<%= @user.name %></td>
+      <td>受講日数</td>
+      
+    </tr>
+
+    <tr>
+      <td>レベル：<%= @user.level.present? ? @user.level : "初級" %></td>
+      <td>
+                <%= link_to "Line Chat", line_chat_user_path, class: "btn btn-primary" %>
+                <%= link_to "質問する", inquiries_question_user_path, class: "btn btn-primary" %>
+      </td>
+      <td><%= @worked_sum %><%= "日" %></td>
+      
+    </tr>
+  </table>
+</div>
+
+<div class="btn-users-show">
+  <%= link_to "⇦ 前月へ", user_path(date: @first_day.prev_month), class: "btn btn-info" %>
+  <%= link_to "次月へ ⇨", user_path(date: @first_day.next_month), class: "btn btn-info" %>
+</div>
+
+<div>
+  <table  class="table table-condensed table-hover border" id="table-attendances">
+    <thead class="border">
+      <tr>
+        <th>日付 / 曜日</th>
+        <th>10:00 - 11:00</th>
+        <th>15:00 - 16:00</th>
+        <th>17:00 - 18:00</th>
+        <th>本日のテスト</th>
+        <th>備考</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @attendances.each do |day| %>
+      　<tr>
+        　<td>
+        　  <%= l(day.worked_on, format: :short) %> / <%= $days_of_the_week[day.worked_on.wday] %><br>
+        　  <% @courses.each do |course| %>
+            <% if course.course_day == day.worked_on %>
+              <%= course.course_content %>
+            <% end %>
+           <% end %>  
+        　</td>
+         
+          <td class="show_back">
+            
+            <% @courses.each do |course| %>
+             <% if course.course_day == day.worked_on && course.course_level == "上級" && course.course_timing == "11時" %>
+              <%= course.course_content %>
+             <% end %>
+            <% end %><br>
+            
+          　<% if $days_of_the_week[day.worked_on.wday] == "月" %>
+              <%= @mon_course_content100 %>
+            <% elsif $days_of_the_week[day.worked_on.wday] == "火" %>
+              <%= @tue_course_content100 %>
+            <% elsif $days_of_the_week[day.worked_on.wday] == "水" %>
+              <%= @wed_course_content100 %>
+            <% elsif $days_of_the_week[day.worked_on.wday] == "木" %>
+              <%= @thu_course_content100 %>
+            <% elsif $days_of_the_week[day.worked_on.wday] == "金" %>
+              <%= @fri_course_content100 %>
+            <% elsif $days_of_the_week[day.worked_on.wday] == "土" %>
+              <%= @sat_course_content100 %>
+            <% elsif $days_of_the_week[day.worked_on.wday] == "日" %>
+              <%= @sun_course_content100 %>
+            <% end %><br>
+            
+            <% if btn_text = attendance_state(day) %>
+              <% if @time >= 10 && @time <= 11 %>
+              <%= link_to "#{btn_text}", user_attendance_path(@user, day), method: :patch, class: "btn btn-primary btn-attendance" %>
+              <%= @time %>
+              <% end %>
+            <% end %><br>
+            
+          </td>
+          
+          <td class="show1_back">
+            
+            <% @courses.each do |course| %>
+             <% if course.course_day == day.worked_on && course.course_level == "上級" && course.course_timing == "16時" %>
+              <%= course.course_content %>
+             <% end %>
+            <% end %><br>
+            
+          　<% if $days_of_the_week[day.worked_on.wday] == "月" %>
+              <%= @mon_course_content200 %>
+            <% elsif $days_of_the_week[day.worked_on.wday] == "火" %>
+              <%= @tue_course_content200 %>
+            <% elsif $days_of_the_week[day.worked_on.wday] == "水" %>
+              <%= @wed_course_content200 %>
+            <% elsif $days_of_the_week[day.worked_on.wday] == "木" %>
+              <%= @thu_course_content200 %>
+            <% elsif $days_of_the_week[day.worked_on.wday] == "金" %>
+              <%= @fri_course_content200 %>
+            <% elsif $days_of_the_week[day.worked_on.wday] == "土" %>
+              <%= @sat_course_content200 %>
+            <% elsif $days_of_the_week[day.worked_on.wday] == "日" %>
+              <%= @sun_course_content200 %>   
+            <% end %><br>
+            
+            <% if btn_text = attendance_state(day) %>
+              <% if @time >= 15 && @time <= 16 %>
+              <%= link_to "#{btn_text}", user_attendance_path(@user, day), method: :patch, class: "btn btn-primary btn-attendance" %>
+              <%= @time %>
+              <% end %>
+            <% end %><br>
+          </td>
+          
+          <td class="show2_back">
+            
+            <% @courses.each do |course| %>
+             <% if course.course_day == day.worked_on && course.course_level == "上級" && course.course_timing == "17時" %>
+              <%= course.course_content %>
+             <% end %>
+            <% end %><br>
+            
+            <% if $days_of_the_week[day.worked_on.wday] == "月" %>
+              <%= @mon_course_content300 %>
+            <% elsif $days_of_the_week[day.worked_on.wday] == "火" %>
+              <%= @tue_course_content300 %>
+            <% elsif $days_of_the_week[day.worked_on.wday] == "水" %>
+              <%= @wed_course_content300 %>
+            <% elsif $days_of_the_week[day.worked_on.wday] == "木" %>
+              <%= @thu_course_content300 %>
+            <% elsif $days_of_the_week[day.worked_on.wday] == "金" %>
+              <%= @fri_course_content300 %>
+            <% elsif $days_of_the_week[day.worked_on.wday] == "土" %>
+              <%= @sat_course_content300 %>
+            <% elsif $days_of_the_week[day.worked_on.wday] == "日" %>
+              <%= @sun_course_content300 %> 
+            <% end %><br>
+            
+            <% if btn_text = attendance_state(day) %>
+              <% if @time >= 17 && @time <= 18 %>
+              <%= link_to "#{btn_text}", user_attendance_path(@user, day), method: :patch, class: "btn btn-primary btn-attendance" %>
+              <%= @time %>
+              <% end %>
+            <% end %>
+          </td>
+          <td class="show3_back"><% if btn_text = attendance_todays_test(day) %>
+              　<%= link_to "本日のテストを受講する", todays_test_attendances_path(@user, day), method: :patch, class: "btn btn-primary btn-attendance" %>
+            　<% end %>
+            　<% if day.test_score.present? %>
+                <%= day.test_score %><%= "点" %>
+              <% end %>
+          </td>
+          <td>
+              <%= link_to "連絡事項", edit_note_user_path(@user, params:{ day: day.worked_on, youbi: %w{日 月 火 水 木 金 土}[day.worked_on.wday] }), remote: true, class: "btn btn-success"  %><br>
+ 
+              <!-- Modal -->
+              <div id="<%= day.id %>" class="modal fade"  tabindex="-1"  role="dialog" aria-hidden="true"></div>
+              <%= day.note %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+    
+    <tfoot>
+      <!--rowspan:縦結合、colspan：横結合-->
+      <tr>
+        <td colspan="3">受講日数</td>
+        <td colspan="3">テスト平均点</td>
+        
+        
+      </tr>
+      <tr>
+        <td colspan="3"><%= @worked_sum %><%= "日" %></td>
+        <td colspan="3"><%= @test_ave.floor(2).to_f %><%= "点" %></td>
+        
+      </tr>
+    </tfoot>   
+  </table>
+</div>
