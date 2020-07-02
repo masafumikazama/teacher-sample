@@ -25,7 +25,7 @@
     <tr>
       <td>レベル：<%= @user.level.present? ? @user.level : "初級" %></td>
       <td>
-                <%= link_to "Line Chat", line_chat_user_path, class: "btn btn-primary" %>
+                <%= link_to "Line 登録", line_chat_user_path, class: "btn btn-primary" %>
                 <%= link_to "質問する", inquiries_question_user_path, class: "btn btn-primary" %>
       </td>
       <td><%= @worked_sum %><%= "日" %></td>

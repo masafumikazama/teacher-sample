@@ -25,10 +25,12 @@ class LinebotController < ApplicationController
       when Line::Bot::Event::Message
         case event.type
         when Line::Bot::Event::MessageType::Text
-          # LINEから送られてきたメッセージが「アンケート」と一致するかチェック
-          if event.message['text'].eql?('アンケート')
+          # LINEから送られてきたメッセージが「ホームページ」と一致するかチェック
+          if event.message['text'].eql?('ホームページ')
             # private内のtemplateメソッドを呼び出します。
             client.reply_message(event['replyToken'], template)
+          elsif event.message['text'].eql?('質問する')
+            client.reply_message(event['replyToken'], template2)
           end
         end
       end
@@ -45,19 +47,44 @@ class LinebotController < ApplicationController
       "altText": "this is a confirm template",
       "template": {
           "type": "confirm",
-          "text": "Lineグループに参加しますか？",
+          "text": "ホームページに移動しますか？",
+          "actions": [
+              {
+                "type": "uri",
+                # Botから送られてきたメッセージに表示される文字列です。
+                "label": "移動する",
+                # ボタンを押した時にBotに送られる文字列です。
+                "uri": "https://hidden-escarpment-79902.herokuapp.com"
+              },
+              {
+                "type": "message",
+                "label": "移動しない",
+                "text": "キャンセルしました。"
+              }
+          ]
+      }
+    }
+  end
+  
+  def template2
+    {
+      "type": "template",
+      "altText": "this is a confirm template",
+      "template": {
+          "type": "confirm",
+          "text": "質問しますか?",
           "actions": [
               {
                 "type": "message",
                 # Botから送られてきたメッセージに表示される文字列です。
-                "label": "参加する",
+                "label": "質問する",
                 # ボタンを押した時にBotに送られる文字列です。
-                "text": "参加する"
+                "text": "質問する"
               },
               {
                 "type": "message",
-                "label": "参加しない",
-                "text": "参加しない"
+                "label": "質問しない",
+                "text": "キャンセルしました。"
               }
           ]
       }
