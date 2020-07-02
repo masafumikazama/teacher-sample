@@ -29,7 +29,7 @@ class LinebotController < ApplicationController
           if event.message['text'].eql?('ホームページ')
             # private内のtemplateメソッドを呼び出します。
             client.reply_message(event['replyToken'], template)
-          elsif event.message['text'].eql?('質問する')
+          elsif event.message['text'].eql?('定期イベント')
             client.reply_message(event['replyToken'], template2)
           end
         end
@@ -72,19 +72,19 @@ class LinebotController < ApplicationController
       "altText": "this is a confirm template",
       "template": {
           "type": "confirm",
-          "text": "質問しますか?",
+          "text": "定期イベントに参加しますか?",
           "actions": [
               {
                 "type": "message",
                 # Botから送られてきたメッセージに表示される文字列です。
-                "label": "質問する",
+                "label": "参加する",
                 # ボタンを押した時にBotに送られる文字列です。
-                "text": "質問する"
+                "text": "確認しました。イベント前日にメッセージが届きます。"
               },
               {
                 "type": "message",
-                "label": "質問しない",
-                "text": "キャンセルしました。"
+                "label": "参加しない",
+                "text": "確認しました。参加したい場合はいつでも申し込み出来ます。"
               }
           ]
       }
