@@ -21,7 +21,7 @@ Rails.application.routes.draw do
    
    post   '/course', to: 'courses#create'
    delete '/course/:id', to: 'courses#destroy'
-   
+   delete '/inquiry/:id', to: 'inquiries#destroy'
    delete '/edit_question/:id', to: 'users#destroy_question'
    
 
@@ -62,7 +62,7 @@ Rails.application.routes.draw do
      # patch 'attendances/todays_test'
     end
     resources :attendances, only: :update # この行を追加します。
-    resources :inquiries,   only: [:question, :create, :destroy]
+    resources :inquiries,   only: [:question, :create]
   end
   
 end

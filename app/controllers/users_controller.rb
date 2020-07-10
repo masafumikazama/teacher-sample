@@ -240,7 +240,7 @@ class UsersController < ApplicationController
     array = []
     users = User.all
     users.each do |user|
-      inquiries = user.inquiries.where.not(content: nil)
+      inquiries = user.inquiries.where.not(content: nil).where(answer: nil)
       inquiries.each do |data|
        array.push(data.user.name)
       end
