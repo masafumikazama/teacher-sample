@@ -6,7 +6,7 @@ class UsersController < ApplicationController
   before_action :set_one_month, only: [:show, :basic_information, :test_results]
 
   def index
-    @users = User.paginate(page: params[:page])
+    @users = User.paginate(page: params[:page]).where.not(id: 1)
   end
 
   def show
@@ -19,33 +19,33 @@ class UsersController < ApplicationController
     
      @sub_course_content = "まだ未定です。"
     
-     @mon_course_content1 = "アルファベット読み書き"
-     @mon_course_content2 = "本読みと作文"
-     @mon_course_content3 = "物語と会話"
+     @mon_course_content1 = "Reading and Writing the Alphabets"
+     @mon_course_content2 = "Reading and Comprehensions"
+     @mon_course_content3 = "Story and Conversations"
      
-     @tue_course_content1 = "レクリエーション"
-     @tue_course_content2 = "物語と会話"
-     @tue_course_content3 = "本読みと作文"
+     @tue_course_content1 = "Recreations"
+     @tue_course_content2 = "Story and Conversations"
+     @tue_course_content3 = "Reading and Comprehensions"
      
-     @wed_course_content1 = "アルファベット読み書き"
-     @wed_course_content2 = "レクリエーション"
-     @wed_course_content3 = "物語と会話"
+     @wed_course_content1 = "Reading and Writing the Alphabets"
+     @wed_course_content2 = "Recreations"
+     @wed_course_content3 = "Story and Conversations"
      
-     @thu_course_content1 = "本読みと作文"
-     @thu_course_content2 = "レクリエーション"
-     @thu_course_content3 = "アルファベット読み書き"
+     @thu_course_content1 = "Reading and Comprehensions"
+     @thu_course_content2 = "Recreations"
+     @thu_course_content3 = "Reading and Writing the Alphabets"
      
-     @fri_course_content1 = "アルファベット読み書き"
-     @fri_course_content2 = "会話中心"
-     @fri_course_content3 = "本読みと作文"
+     @fri_course_content1 = "Reading and Writing the Alphabets"
+     @fri_course_content2 = "Speech and Conversations"
+     @fri_course_content3 = "Reading and Comprehensions"
      
-     @sat_course_content1 = "物語と会話"
-     @sat_course_content2 = "会話中心"
-     @sat_course_content3 = "アルファベット読み書き"
+     @sat_course_content1 = "Story and Conversations"
+     @sat_course_content2 = "Speech and Conversations"
+     @sat_course_content3 = "Reading and Writing the Alphabets"
      
-     @sun_course_content1 = "アルファベット読み書き"
-     @sun_course_content2 = "レクリエーション"
-     @sun_course_content3 = "本読みと作文"
+     @sun_course_content1 = "Reading and Writing the Alphabets"
+     @sun_course_content2 = "Recreations"
+     @sun_course_content3 = "Reading and Comprehensions"
      
      @worked_sum = @attendances.where.not(started_at: nil).count
      
@@ -59,71 +59,71 @@ class UsersController < ApplicationController
      # 中級用授業内容
      @sub_course_content = "まだ未定です。"
     
-     @mon_course_content10 = "アルファベットフォニックス"
-     @mon_course_content20 = "本読みと作文"
-     @mon_course_content30 = "ストーリQ&A"
+     @mon_course_content10 = "Alphabets and Phonics"
+     @mon_course_content20 = "Reading and Comprehensions"
+     @mon_course_content30 = "Story Q&A"
      
-     @tue_course_content10 = "レクリエーション"
-     @tue_course_content20 = "ストーリQ&A"
-     @tue_course_content30 = "本読みと作文"
+     @tue_course_content10 = "Recreations"
+     @tue_course_content20 = "Story Q&A"
+     @tue_course_content30 = "Reading and Comprehensions"
      
-     @wed_course_content10 = "アルファベットフォニックス"
-     @wed_course_content20 = "レクリエーション"
-     @wed_course_content30 = "ストーリQ&A"
+     @wed_course_content10 = "Alphabets and Phonics"
+     @wed_course_content20 = "Recreations"
+     @wed_course_content30 = "Story Q&A"
      
-     @thu_course_content10 = "本読みと作文"
-     @thu_course_content20 = "レクリエーション"
-     @thu_course_content30 = "アルファベットフォニックス"
+     @thu_course_content10 = "Reading and Comprehensions"
+     @thu_course_content20 = "Recreations"
+     @thu_course_content30 = "Alphabets and Phonics"
      
-     @fri_course_content10 = "アルファベットフォニックス"
-     @fri_course_content20 = "ストーリQ&A"
-     @fri_course_content30 = "本読みと作文"
+     @fri_course_content10 = "Alphabets and Phonics"
+     @fri_course_content20 = "Story Q&A"
+     @fri_course_content30 = "Reading and Comprehensions"
      
-     @sat_course_content10 = "ストーリQ&A"
-     @sat_course_content20 = "会話中心"
-     @sat_course_content30 = "アルファベットフォニックス"
+     @sat_course_content10 = "Story Q&A"
+     @sat_course_content20 = "Speech and Conversations"
+     @sat_course_content30 = "Alphabets and Phonics"
      
-     @sun_course_content10 = "アルファベットフォニックス"
-     @sun_course_content20 = "レクリエーション"
-     @sun_course_content30 = "本読みと作文"
+     @sun_course_content10 = "Alphabets and Phonics"
+     @sun_course_content20 = "Recreations"
+     @sun_course_content30 = "Reading and Comprehensions"
      
      # 上級用の授業内容
      @sub_course_content = "まだ未定です。"
     
-     @mon_course_content100 = "スピーチ"
-     @mon_course_content200 = "本読みと作文"
-     @mon_course_content300 = "文法と語彙"
+     @mon_course_content100 = "Literacy"
+     @mon_course_content200 = "Reading and Comprehensions"
+     @mon_course_content300 = "Grammer"
      
-     @tue_course_content100 = "レクリエーション"
-     @tue_course_content200 = "文法と語彙"
-     @tue_course_content300 = "本読みと作文"
+     @tue_course_content100 = "Recreations"
+     @tue_course_content200 = "Grammer"
+     @tue_course_content300 = "Reading and Comprehensions"
      
-     @wed_course_content100 = "スピーチ"
-     @wed_course_content200 = "レクリエーション"
-     @wed_course_content300 = "文法と語彙"
+     @wed_course_content100 = "Literacy"
+     @wed_course_content200 = "Recreations"
+     @wed_course_content300 = "Gremmer"
      
-     @thu_course_content100 = "本読みと作文"
-     @thu_course_content200 = "レクリエーション"
-     @thu_course_content300 = "スピーチ"
+     @thu_course_content100 = "Reading and Comprehensions"
+     @thu_course_content200 = "Recreations"
+     @thu_course_content300 = "Literacy"
      
-     @fri_course_content100 = "スピーチ"
-     @fri_course_content200 = "会話中心"
-     @fri_course_content300 = "本読みと作文"
+     @fri_course_content100 = "Literacy"
+     @fri_course_content200 = "Speech and Conversations"
+     @fri_course_content300 = "Reading and Comprehensions"
      
-     @sat_course_content100 = "文法と語彙"
-     @sat_course_content200 = "会話中心"
-     @sat_course_content300 = "スピーチ"
+     @sat_course_content100 = "Grammer"
+     @sat_course_content200 = "Speech and Conversations"
+     @sat_course_content300 = "Literacy"
      
-     @sun_course_content100 = "スピーチ"
-     @sun_course_content200 = "レクリエーション"
-     @sun_course_content300 = "本読みと作文"
+     @sun_course_content100 = "Literacy"
+     @sun_course_content200 = "Recreations"
+     @sun_course_content300 = "Reading and Comprehensions"
      
      # テストの誉め言葉
-     @hows_test1 = "まだまだこれから。"
-     @hows_test2 = "がんばりました。"
-     @hows_test3 = "よくできました！"
-     @hows_test4 = "すばらしい！！"
-     @hows_test5 = "エクセレント！！！"
+     @hows_test1 = "good"
+     @hows_test2 = "Graet"
+     @hows_test3 = "Amazing！"
+     @hows_test4 = "Incredible！！"
+     @hows_test5 = "Perfect！！！"
   end
 
   def new

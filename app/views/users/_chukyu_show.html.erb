@@ -77,7 +77,7 @@
             <% if btn_text = attendance_state(day) %>
               <% if @time >= 10 && @time <= 11 %>
               <%= link_to "#{btn_text}", user_attendance_path(@user, day), method: :patch, class: "btn btn-primary btn-attendance" %>
-              <%= @time %>
+              
               <% end %>
             <% end %><br>
             
@@ -110,7 +110,7 @@
             <% if btn_text = attendance_state(day) %>
               <% if @time >= 15 && @time <= 16 %>
               <%= link_to "#{btn_text}", user_attendance_path(@user, day), method: :patch, class: "btn btn-primary btn-attendance" %>
-              <%= @time %>
+              
               <% end %>
             <% end %><br>
           </td>
@@ -142,7 +142,7 @@
             <% if btn_text = attendance_state(day) %>
               <% if @time >= 17 && @time <= 18 %>
               <%= link_to "#{btn_text}", user_attendance_path(@user, day), method: :patch, class: "btn btn-primary btn-attendance" %>
-              <%= @time %>
+              
               <% end %>
             <% end %>
           </td>

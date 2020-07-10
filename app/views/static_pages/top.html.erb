@@ -1,7 +1,7 @@
 
 <% provide(:title, "Top") %>
 
-<h1 class="titlecolor">オンラインレッスン管理アプリ</h1>
+<h1 class="titlecolor">子供英会話オンラインレッスン管理アプリ</h1>
 
 <div class="container">
   <div class="row">
@@ -16,13 +16,19 @@
     </div>
     
     <div class="col-sm-3">
-      <h2 class="subtitlecolor">ログインはこちらから</h2>
-      <p class="subtitlesize"><%= link_to "ログイン", login_path, class: "btn btn-lg btn-info" %></p>
+       <div class="box30">
+         <div class="box-title">ログインはこちらから</div>
+         <p class="subtitlesize"><%= link_to "ログイン", login_path, class: "btn btn-lg btn-primary" %></p>
+       </div>
+      
     </div>
     
     <div class="col-sm-3">
-      <h2  class="subtitlecolor">新規登録はこちらから</h2>
-      <p class="subtitlesize2"><%= link_to "ユーザー登録", signup_path, class: "btn btn-lg btn-success" %></p>
+      <div class="box30">
+         <div class="box-title">新規登録はこちらから</div>
+         <p class="subtitlesize2"><%= link_to "新規生徒登録", signup_path, class: "btn btn-lg btn-success" %></p>
+       </div>
+      
     </div>
     
     <div class="col-sm-3">

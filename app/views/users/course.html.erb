@@ -13,13 +13,13 @@
       <%= f.label :授業内容, class: "label-#{yield(:class_text)}" %>
       <%= f.text_area :course_content, class: "form-control" %>
       
-      <%= f.label :course_level, class: "label-#{yield(:class_text)}" %>
+      <%= f.label :クラス, class: "label-#{yield(:class_text)}" %>
       <%= f.select :course_level, [["初級", "初級"],["中級", "中級"],["上級", "上級"]], {}, {class: "form-control"} %>
       
-      <%= f.label :course_day, class: "label-#{yield(:class_text)}" %>
+      <%= f.label :日付, class: "label-#{yield(:class_text)}" %>
       <%= f.date_field :course_day, class: "form-control" %>
   
-      <%= f.label :course_time, class: "label-#{yield(:class_text)}" %>
+      <%= f.label :時間帯, class: "label-#{yield(:class_text)}" %>
       <%= f.select :course_timing, [["10時-11時", "11時"],["15時-16時", "16時"],["17時-18時", "17時"]], {}, {class: "form-control"} %>
     
       <%= f.submit "作成する", class: "btn btn-primary" %>

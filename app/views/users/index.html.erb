@@ -5,7 +5,7 @@
   <%= will_paginate %>
   <table class="table table-condensed table-hover border" id="table-users">
     <thead class="border">
-      <tr>
+      <tr class="show5_back">
         <th><%= User.human_attribute_name :name %></th>
         <th class="center"><%= User.human_attribute_name :level %></th>
         <% if current_user.admin? %>
@@ -17,12 +17,10 @@
 
     <% @users.each do |user| %>
     <tr>
-        <td>
-          <% if current_user.admin? %>
-            <%= link_to user.name, user %>
-          <% else %>
+        <td class="center">
+          
             <%= user.name %>
-          <% end %>
+          
         </td>
         <td class="center"><%= user.level.present? ? user.level : "未所属" %></td>
         <% if current_user.admin? %>

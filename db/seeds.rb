@@ -1,12 +1,24 @@
 # coding: utf-8
 
-User.create!(name: "Sample User",
+User.create!(name: "管理者",
              email: "sample@email.com",
              password: "password",
              password_confirmation: "password",
              admin: true)
 
-60.times do |n|
+User.create!(name:  "サンプルユーザー",
+             email: "sample_user@email.com",
+             password:              "password",
+             password_confirmation: "password",
+             level: "初級")
+
+User.create!(name:  "中山一郎",
+             email: "samplea@email.com",
+             password:              "password",
+             password_confirmation: "password",
+             level: "初級")
+
+20.times do |n|
   name  = Faker::Name.name
   email = "sample-#{n+1}@email.com"
   password = "password"

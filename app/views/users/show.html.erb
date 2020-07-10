@@ -16,18 +16,18 @@
 <div>
   <table class="table table-bordered table-condensed user-table">
     <tr>
-      <td>【<%= l(@first_day, format: :middle) %>】オンラインレッスン表</td>
-      <td>名前：<%= @user.name %></td>
+      <td colspan="2">【<%= l(@first_day, format: :middle) %>】オンラインレッスン表
+      　　　<%= link_to "Line 登録", line_chat_user_path, class: "btn btn-success" %>
+                <%= link_to "質問する", inquiries_question_user_path, class: "btn btn-primary" %>
+      </td>
       <td>受講日数</td>
       
     </tr>
 
     <tr>
       <td>レベル：<%= @user.level.present? ? @user.level : "初級" %></td>
-      <td>
-                <%= link_to "Line 登録", line_chat_user_path, class: "btn btn-primary" %>
-                <%= link_to "質問する", inquiries_question_user_path, class: "btn btn-primary" %>
-      </td>
+      <td>名前：<%= @user.name %></td>
+      
       <td><%= @worked_sum %><%= "日" %></td>
       
     </tr>
@@ -42,7 +42,7 @@
 <div>
   <table  class="table table-condensed table-hover border" id="table-attendances">
     <thead class="border">
-      <tr>
+      <tr class="show5_back">
         <th>日付 / 曜日</th>
         <th>10:00 - 11:00</th>
         <th>15:00 - 16:00</th>
@@ -86,7 +86,7 @@
             <% if btn_text = attendance_state(day) %>
               <% if @time >= 10 && @time <= 11 %>
               <%= link_to "#{btn_text}", user_attendance_path(@user, day), method: :patch, class: "btn btn-primary btn-attendance" %>
-              <%= @time %>
+              
               <% end %>
             <% end %><br>
             
@@ -119,7 +119,7 @@
             <% if btn_text = attendance_state(day) %>
               <% if @time >= 15 && @time <= 16 %>
               <%= link_to "#{btn_text}", user_attendance_path(@user, day), method: :patch, class: "btn btn-primary btn-attendance" %>
-              <%= @time %>
+              
               <% end %>
             <% end %><br>
           </td>
@@ -151,7 +151,7 @@
             <% if btn_text = attendance_state(day) %>
               <% if @time >= 17 && @time <= 18 %>
               <%= link_to "#{btn_text}", user_attendance_path(@user, day), method: :patch, class: "btn btn-primary btn-attendance" %>
-              <%= @time %>
+             
               <% end %>
             <% end %>
           </td>
@@ -174,7 +174,7 @@
               <% end %>
           </td>
           <td>
-              <%= link_to "連絡事項", edit_note_user_path(@user, params:{ day: day.worked_on, youbi: %w{日 月 火 水 木 金 土}[day.worked_on.wday] }), remote: true, class: "btn btn-success"  %><br>
+              <%= link_to "連絡事項", edit_note_user_path(@user, params:{ day: day.worked_on, youbi: %w{日 月 火 水 木 金 土}[day.worked_on.wday] }), remote: true, class: "btn btn-warning btn-sm"  %><br>
  
               <!-- Modal -->
               <div id="<%= day.id %>" class="modal fade"  tabindex="-1"  role="dialog" aria-hidden="true"></div>

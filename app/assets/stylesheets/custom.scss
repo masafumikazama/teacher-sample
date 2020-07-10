@@ -4,11 +4,11 @@
 /* universal */
 
 body {
-  background:url(https://cdn.pixabay.com/photo/2016/02/24/10/52/alphabet-1219546_960_720.jpg);
+  background:url(https://flowerillust.com/img/flower/flower-back0819.jpg);
   background-size: 100% auto; 
   background-repeat: no-repeat;
   
-  padding-top: 60px;
+  padding-top: 100px;
 }
 
 section {
@@ -43,8 +43,9 @@ td {
   border: solid 3px #364e96;/*線色*/
   padding: 0.5em;/*文字周りの余白*/
   border-radius: 0.5em;/*角丸*/
-  margin-left: 200px;
-  margin-right: 200px;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: white;
  }
  
  .subtitlecolor {
@@ -255,4 +256,23 @@ td, th { border: 2px black solid; }
 
 .show5_back {
   background-color: white;
+}
+
+.box30 {
+    margin: 2em 0;
+    
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.22);
+}
+.box30 .box-title {
+    font-size: 1.2em;
+    background: #5fc2f5;
+    padding: 4px;
+    text-align: center;
+    color: #FFF;
+    font-weight: bold;
+    letter-spacing: 0.05em;
+}
+.box30 p {
+    padding: 15px 20px;
+    margin: 0;
 }
