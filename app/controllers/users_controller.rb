@@ -344,8 +344,8 @@ class UsersController < ApplicationController
   def edit_question
     
     @user = User.find(params[:id])
-    @inquiry = @user.inquiries.find_by(params[:id])
-    @users = User.all
+    
+    
     @answers = @user.inquiries.all
     
   end
