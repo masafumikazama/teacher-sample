@@ -90,7 +90,7 @@ class InquiriesController < ApplicationController
   end
   
   def update_q_answer
-    @user = User.find_by(params[:id])
+    
     @inquiry = Inquiry.find(params[:id])
     
       if @inquiry.update_attributes(q_answer_params)
